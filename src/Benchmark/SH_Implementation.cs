@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NegativeIntersectArrays
 {
     public static class SH_Implementation
     {
-        public static int[] NegativeIntersectArrays(int[] source, IReadOnlyList<int[]> exceptions)
-        {
-            var sourceLength = source.Length;
-            if (sourceLength == 0)
-                return new int[0];
+        public static System.Buffers.ArrayPool<int> arrayPool = System.Buffers.ArrayPool<int>.Create();
 
-            // Pointer into initial array
-            Span<int> matches = new Span<int>(source, 0, source.Length);
+        //public static ObjectPool<int[]> temporaryArrays =
+        //    new DefaultObjectPool<int[]>(
+        //        new DefaultPooledObjectPolicy<int[]>(), 20
+        //        );
+
+        static int[] emptyArray = new int[0];
+        public static int[] NegativeIntersectArrays(int[] readonlySource, IReadOnlyList<int[]> exceptions)
+        {
+            var sourceLength = readonlySource.Length;
+            if (sourceLength == 0)
+                return emptyArray;
+
+            var source = arrayPool.Rent(sourceLength);
+            //var source = new int[sourceLength];
+            Buffer.BlockCopy(readonlySource, 0, source, 0, sourceLength * sizeof(int));
 
             int lastWorkingLength = sourceLength;
             var maxSearch = source[sourceLength - 1];
             for (var i = 0; i < exceptions.Count; i++)
             {
-                var arr1Len = sourceLength;
+                var arr1Len = lastWorkingLength;
                 var arr2Len = exceptions[i].Length;
                 var baseArray = source;
                 var comparedArray = exceptions[i];
@@ -41,25 +49,32 @@ namespace NegativeIntersectArrays
                     }
                     else if (baseVal == compVal)
                     {
-                        baseArrayIndex++;
-                        comparedArrayIndex++;
+                        ++baseArrayIndex;
+                        ++comparedArrayIndex;
                     }
                     else
                     {
-                        matches[writeIndex++] = baseVal;
-                        baseArrayIndex++;
+                        source[writeIndex++] = baseVal;
+                        ++baseArrayIndex;
                     }
                 }
 
                 while (baseArrayIndex < arr1Len) // if the baseArray is longer than the array we have to except, we need to copy in the rest of the items
                 {
-                    matches[writeIndex++] = baseArray[baseArrayIndex];
+                    source[writeIndex++] = baseArray[baseArrayIndex];
                     baseArrayIndex++;
                 }
-                matches = new Span<int>(source, 0, writeIndex);
+                lastWorkingLength = writeIndex;
             }
+            //return new Span<int>(source, 0, lastWorkingLength).ToArray();
+            var returnable = new int[lastWorkingLength];
+            Buffer.BlockCopy(source, 0, returnable, 0, sizeof(int) * lastWorkingLength);
+            arrayPool.Return(source);
 
-            return matches.ToArray();
+            return returnable;
+            //Array.Copy()
+            //Array.Resize(ref source, lastWorkingLength);
+            //return source;
         }
     }
 }

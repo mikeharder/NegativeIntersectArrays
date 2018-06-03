@@ -37,7 +37,6 @@ namespace NegativeIntersectArrays
         public void SH_NegativeIntersection()
         {
             var k = SH_Implementation.NegativeIntersectArrays(baseA, nega);
-            //Console.WriteLine($"{swT} time for {repetitions} excluding intersections. Array Size b4: {baseALength} after: {k.Length}. Per Exec: {swT / repetitions}ms");
         }
     }
 }
