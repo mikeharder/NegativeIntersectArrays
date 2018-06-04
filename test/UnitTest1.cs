@@ -12,8 +12,12 @@ namespace Tests
         public NegativeIntersectionTests()
         {
             //TODO: Verify other implementations by pointing to the static function here:
+            
+            //this.NegativeIntersectArrays = new Func<int[], IReadOnlyList<int[]>, int[]>(
+            //    global::NegativeIntersectArrays.SH_Implementation.NegativeIntersectArrays);
+
             this.NegativeIntersectArrays = new Func<int[], IReadOnlyList<int[]>, int[]>(
-                global::NegativeIntersectArrays.SH_Implementation.NegativeIntersectArrays);
+                global::NegativeIntersectArrays.Mike_Implementation.NegativeIntersectArrays);
         }
 
         [Fact]
