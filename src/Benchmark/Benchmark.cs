@@ -56,16 +56,16 @@ namespace NegativeIntersectArrays
             var k = Mike_Implementation.NegativeIntersectArrays(baseA, nega);
         }
 
-        //[Benchmark]
-        //public void SH_NegativeIntersectionB()
-        //{
-        //    var k = SH_Implementation.NegativeIntersectArrays(baseA, negb);
-        //}
+        [Benchmark]
+        public void SH_NegativeIntersectionB()
+        {
+            var k = SH_Implementation.NegativeIntersectArrays(baseA, negb);
+        }
 
-        //[Benchmark]
-        //public void Mike_NegativeIntersectionB()
-        //{
-        //    var k = Mike_Implementation.NegativeIntersectArrays(baseA, negb);
-        //}
+        [Benchmark]
+        public void Mike_NegativeIntersectionB()
+        {
+            var k = Mike_Implementation.NegativeIntersectArrays(baseA, negb);
+        }
     }
 }
