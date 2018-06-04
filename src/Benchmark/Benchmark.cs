@@ -13,7 +13,10 @@ namespace NegativeIntersectArrays
     {
         int[] baseA;
         int[] baseB;
+        int[] baseC;
+        int[] baseD;
         int[][] nega;
+        int[][] negb;
         const int randomSeed = 51292;
 
         public Algos()
@@ -21,6 +24,8 @@ namespace NegativeIntersectArrays
             Random rr = new Random(randomSeed);
             baseA = new int[rr.Next(0, 300000)];
             baseB = new int[rr.Next(0, 100000)];
+            baseC = new int[rr.Next(0, 100000)];
+            baseD = new int[rr.Next(0, 100000)];
             var fill = new Func<int[], bool>((int[] x) =>
             {
                 for (int i = 0; i < x.Length; i++)
@@ -33,7 +38,10 @@ namespace NegativeIntersectArrays
 
             fill(baseA);
             fill(baseB);
+            fill(baseC);
+            fill(baseD);
             nega = new[] { baseB };
+            negb = new[] { baseB, baseC, baseD };
         }
 
         [Benchmark]
@@ -43,10 +51,21 @@ namespace NegativeIntersectArrays
         }
 
         [Benchmark]
-        public void Mike_Implementation()
+        public void Mike_NegativeIntersection()
         {
-            //TODO: Insert here
-            System.Threading.Thread.Sleep(5);
+            var k = Mike_Implementation.NegativeIntersectArrays(baseA, nega);
         }
+
+        //[Benchmark]
+        //public void SH_NegativeIntersectionB()
+        //{
+        //    var k = SH_Implementation.NegativeIntersectArrays(baseA, negb);
+        //}
+
+        //[Benchmark]
+        //public void Mike_NegativeIntersectionB()
+        //{
+        //    var k = Mike_Implementation.NegativeIntersectArrays(baseA, negb);
+        //}
     }
 }
