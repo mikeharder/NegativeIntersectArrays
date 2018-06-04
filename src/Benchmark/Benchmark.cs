@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Attributes.Exporters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +7,8 @@ using System.Text;
 
 namespace NegativeIntersectArrays
 {
+    [HtmlExporter]
+    [MarkdownExporter]
     public class Algos
     {
         int[] baseA;
@@ -37,6 +40,13 @@ namespace NegativeIntersectArrays
         public void SH_NegativeIntersection()
         {
             var k = SH_Implementation.NegativeIntersectArrays(baseA, nega);
+        }
+
+        [Benchmark]
+        public void Mike_Implementation()
+        {
+            //TODO: Insert here
+            System.Threading.Thread.Sleep(5);
         }
     }
 }

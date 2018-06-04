@@ -11,6 +11,7 @@ namespace Tests
         Func<int[], IReadOnlyList<int[]>, int[]> NegativeIntersectArrays;
         public NegativeIntersectionTests()
         {
+            //TODO: Verify other implementations by pointing to the static function here:
             this.NegativeIntersectArrays = new Func<int[], IReadOnlyList<int[]>, int[]>(
                 global::NegativeIntersectArrays.SH_Implementation.NegativeIntersectArrays);
         }
@@ -32,6 +33,17 @@ namespace Tests
             var result = NegativeIntersectArrays(baseA, nega);
             Assert.Equal(3, result.Length);
             Assert.Equal(3, result[2]);
+        }
+
+
+        [Fact]
+        public void MultipleRangesDontCauseExplosions()
+        {
+            var baseA = new[] { 4, 5, 6, 9, 10, 14 };
+            var nega = new[] { new[] { 5, 6 }, new[] { 8, 14 }, new[] { 10 }, new[] { 8, 10, 14 }, new[] { 4 } };
+            var result = NegativeIntersectArrays(baseA, nega);
+            Assert.Single(result);
+            Assert.Equal(9, result[0]);
         }
 
         [Fact]
