@@ -44,28 +44,23 @@ namespace NegativeIntersectArrays
             negb = new[] { baseB, baseC, baseD };
         }
 
-        [Benchmark]
-        public void SH_NegativeIntersection()
-        {
-            var k = SH_Implementation.NegativeIntersectArrays(baseA, nega);
-        }
+        #region Test Data A
+        [Benchmark] public void SH_A() { var k = SH_Implementation.NegativeIntersectArrays(baseA, nega); }
 
-        [Benchmark]
-        public void Mike_NegativeIntersection()
-        {
-            var k = Mike_Implementation.NegativeIntersectArrays(baseA, nega);
-        }
+        [Benchmark] public void SH_Unsafe_A() { var k = SH_Unsafe.NegativeIntersectArrays(baseA, nega); }
 
-        [Benchmark]
-        public void SH_NegativeIntersectionB()
-        {
-            var k = SH_Implementation.NegativeIntersectArrays(baseA, negb);
-        }
+        //[Benchmark] public void Mike_A() { var k = Mike_Implementation.NegativeIntersectArrays(baseA, nega); }
+        #endregion
 
-        [Benchmark]
-        public void Mike_NegativeIntersectionB()
-        {
-            var k = Mike_Implementation.NegativeIntersectArrays(baseA, negb);
-        }
+        #region Test Data B
+        [Benchmark] public void SH_B() { var k = SH_Implementation.NegativeIntersectArrays(baseA, negb); }
+        [Benchmark] public void SH_Unsafe_B() { var k = SH_Unsafe.NegativeIntersectArrays(baseA, negb); }
+
+        //[Benchmark] public void Mike_B() { var k = Mike_Implementation.NegativeIntersectArrays(baseA, negb); }
+
+
+        #endregion
+
+
     }
 }
